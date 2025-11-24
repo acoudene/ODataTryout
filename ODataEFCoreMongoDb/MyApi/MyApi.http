@@ -1,0 +1,68 @@
+@MyApi_HostAddress = http://localhost:5294
+
+###
+
+GET {{MyApi_HostAddress}}/odata/Products
+Accept: application/json
+
+### 
+
+GET {{MyApi_HostAddress}}/odata/Products?$filter=Price gt 100
+Accept: application/json
+
+###
+
+GET {{MyApi_HostAddress}}/odata/Products?$filter=Stock lt 20&$orderby=Price desc
+Accept: application/json
+
+###
+
+GET {{MyApi_HostAddress}}/odata/Products?$expand=Category
+Accept: application/json
+
+###
+
+GET {{MyApi_HostAddress}}/odata/Products?$select=Name,Price&$top=5
+Accept: application/json
+
+###
+
+GET {{MyApi_HostAddress}}/odata/Products?$filter=contains(Name,'Laptop')
+Accept: application/json
+
+###
+
+GET {{MyApi_HostAddress}}/odata/Categories?$expand=Products($filter=Price lt 1000)
+Accept: application/json
+
+###
+
+GET {{MyApi_HostAddress}}/odata/Products/$count
+Accept: application/json
+
+###
+
+GET {{MyApi_HostAddress}}/odata/Products(guid'...')
+Accept: application/json
+
+###
+
+POST {{MyApi_HostAddress}}/odata/Products
+Accept: application/json
+Content-Type: application/json
+{
+  "name": "Tablet",
+  "price": 500.00,
+  "stock": 20,
+  "categoryId": "guid..."
+}
+
+###
+
+PATCH {{MyApi_HostAddress}}/odata/Products(guid'...')
+Accept: application/json
+
+###
+
+DELETE {{MyApi_HostAddress}}/odata/Products(guid'...)
+Accept: application/json
