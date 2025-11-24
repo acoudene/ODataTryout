@@ -7,7 +7,6 @@ using MyApi.Entities;
 
 namespace MyApi.Controllers;
 
-[Route("odata/[controller]")]
 public class ProductsController : ODataController
 {
   private readonly AppDbContext _context;

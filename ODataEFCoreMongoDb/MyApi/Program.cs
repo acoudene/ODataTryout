@@ -14,9 +14,12 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+// Configuration de la connexion MongoDB
 var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDB")
     ?? "mongodb://localhost:27017";
 var mongoDatabaseName = "ODataDemo";
+
+// docker run -d -p 27017:27017 --name mongodb mongo:latest
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMongoDB(mongoConnectionString, mongoDatabaseName));
@@ -82,6 +85,8 @@ static async Task SeedData(AppDbContext context)
         new Product { Id = Guid.NewGuid(), Name = "Clean Code", Price = 45.00m, Stock = 50, CategoryId = books.Id },
         new Product { Id = Guid.NewGuid(), Name = "Design Patterns", Price = 55.00m, Stock = 30, CategoryId = books.Id }
     );
+
+    context.Database.AutoTransactionBehavior = AutoTransactionBehavior.Never;
 
     await context.SaveChangesAsync();
   }
