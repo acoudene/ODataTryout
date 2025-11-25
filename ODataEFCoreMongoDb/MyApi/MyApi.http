@@ -31,7 +31,7 @@ GET {{baseUrl}}/Products?$orderby=Price+desc&$top=3
 GET {{baseUrl}}/Products/$count
 
 ### Get single product by ID
-GET {{baseUrl}}/Products(3fa85f64-5717-4562-b3fc-2c963f66afa6)
+GET {{baseUrl}}/Products(0855d688-6529-4c8c-b55d-9f51fb2e9fb9)
 
 ### Get categories with products expanded
 GET {{baseUrl}}/Categories?$expand=Products
@@ -47,22 +47,22 @@ Content-Type: application/json
   "name": "Design Patterns",
   "price": 55.00,
   "stock": 30,
-  "categoryId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  "categoryId": "3f8b0347-ac89-470c-a24b-93cf58a538eb"
 }
 
 ### PATCH update product
-PATCH {{baseUrl}}/Products(3fa85f64-5717-4562-b3fc-2c963f66afa6)
+PATCH {{baseUrl}}/Products(0855d688-6529-4c8c-b55d-9f51fb2e9fb9)
 Content-Type: application/json
 
 {
   "name": "Clean Code Updated",
   "price": 49.99,
   "stock": 45,
-  "categoryId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  "categoryId": "3f8b0347-ac89-470c-a24b-93cf58a538eb"
 }
 
 ### DELETE product
-DELETE {{baseUrl}}/Products(3fa85f64-5717-4562-b3fc-2c963f66afa6)
+DELETE {{baseUrl}}/Products(0855d688-6529-4c8c-b55d-9f51fb2e9fb9)
 
 ### Filter avec opérateurs logiques et espaces
 GET {{baseUrl}}/Products?$filter=contains(Name,'Clean%20Code')%20or%20contains(Name,'Design%20Patterns')
