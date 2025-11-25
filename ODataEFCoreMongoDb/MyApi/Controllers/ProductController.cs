@@ -19,16 +19,18 @@ public class ProductsController : ODataController
   [EnableQuery(MaxExpansionDepth = 3)]
   public IQueryable<Product> Get()
   {
-    return _context.Products.Include(p => p.Category);
+    //return _context.Products.Include(p => p.Category);
+    return _context.Products;
   }
 
   [EnableQuery]
   public async Task<IActionResult> Get([FromRoute] Guid key)
   {
-    var product = await _context.Products
-        .Include(p => p.Category)
+    //var product = await _context.Products
+    //    .Include(p => p.Category)
+    //    .FirstOrDefaultAsync(p => p.Id == key);
+    var product = await _context.Products        
         .FirstOrDefaultAsync(p => p.Id == key);
-
     if (product == null)
       return NotFound();
 

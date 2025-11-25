@@ -19,16 +19,18 @@ public class CategoriesController : ODataController
   [EnableQuery]
   public IQueryable<Category> Get()
   {
-    return _context.Categories.Include(c => c.Products);
+    //return _context.Categories.Include(c => c.Products);
+    return _context.Categories;
   }
 
   [EnableQuery]
   public async Task<IActionResult> Get([FromRoute] Guid key)
   {
+    //var category = await _context.Categories
+    //    .Include(c => c.Products)
+    //    .FirstOrDefaultAsync(c => c.Id == key);
     var category = await _context.Categories
-        .Include(c => c.Products)
         .FirstOrDefaultAsync(c => c.Id == key);
-
     if (category == null)
       return NotFound();
 
