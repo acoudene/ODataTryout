@@ -3,6 +3,9 @@
 
 @baseUrl = https://localhost:7027/odata
 
+### Get Metadata
+ GET {{baseUrl}}/$metadata
+
 ### Get all products
 GET {{baseUrl}}/Products
 
@@ -40,7 +43,7 @@ GET {{baseUrl}}/Products(0855d688-6529-4c8c-b55d-9f51fb2e9fb9)
 GET {{baseUrl}}/Categories?$expand=Products
 
 ### Get categories with filtered products
-GET {{baseUrl}}/Categories?$expand=Products($filter=Price lt 1000)
+GET {{baseUrl}}/Categories?$expand=Products($filter=Price+lt+1000)
 
 ### POST new product
 POST {{baseUrl}}/Products
@@ -71,4 +74,7 @@ DELETE {{baseUrl}}/Products(0855d688-6529-4c8c-b55d-9f51fb2e9fb9)
 GET {{baseUrl}}/Products?$filter=contains(Name,'Clean%20Code')%20or%20contains(Name,'Design%20Patterns')
 
 ### Filter complexe avec parenthèses
-GET {{baseUrl}}/Products?$filter=(Price%20gt%2050%20and%20Price%20lt%20100)%20and%20contains(Name,'Code')
+GET {{baseUrl}}/Products?$filter=(Price%20gt%2010%20and%20Price%20lt%20100)%20and%20contains(Name,'Clean')
+
+### Get all orders
+GET {{baseUrl}}/Orders
