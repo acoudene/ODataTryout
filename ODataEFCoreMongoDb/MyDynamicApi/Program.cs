@@ -4,7 +4,6 @@
 using Domain.EFCore.DbContexts;
 using Domain.EFCore.Seeding;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OData.ModelBuilder;
 using OData.Api.IoC;
 using OData.Api.Services;
