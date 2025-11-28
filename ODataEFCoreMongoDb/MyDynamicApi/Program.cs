@@ -1,12 +1,14 @@
 ﻿// Changelogs Date  | Author                | Description
 // 2023-12-23       | Anthony Coudène       | Creation
 
-using OData.Api.IoC;
-using OData.Api.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OData.ModelBuilder;
 using Domain.EFCore.DbContexts;
 using Domain.EFCore.Seeding;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OData.ModelBuilder;
+using OData.Api.IoC;
+using OData.Api.Services;
+using OtherDomain.EFCore.DbContexts;
+using OtherDomain.EFCore.Seeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,27 @@ builder.Services
   .AddControllers()
   .AddDefaultODataDynamicControllerFeature(entityTypes, modelBuilder.GetEdmModel(), "odata");
 
+///
+/// UNCOMMENT THE FOLLOWING TO ENABLE MULTI-DB CONTEXT SCENARIO
+
+// Other DbContext creation
+//builder.Services.AddDbContext<OtherDomainDbContext>(options =>
+//    options.UseMongoDB(mongoConnectionString, mongoDatabaseName));
+
+//// OtherScan the DbContext for DbSet<TEntity> properties and register OData controllers for each entity type
+//var otherModelBuilder = new ODataConventionModelBuilder();
+//var entityTypes = otherModelBuilder.AutoRegisterEntities<OtherDomainDbContext>();
+
+//// Register the EFCoreDataService as the implementation for IDataService
+//builder.Services.AddScoped<IDataService, EFCoreDataService<OtherDomainDbContext>>();
+
+//// Register OData controllers for each entity type
+//builder.Services
+//  .AddControllers()
+//  .AddDefaultODataDynamicControllerFeature(entityTypes, otherModelBuilder.GetEdmModel(), "odata");
+
+///
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -63,6 +86,18 @@ using (var scope = app.Services.CreateScope())
   context.Database.AutoTransactionBehavior = AutoTransactionBehavior.Never;
   await DomainDbContextExtensions.SeedDataAsync(context);
 }
+
+/// UNCOMMENT THE FOLLOWING TO ENABLE MULTI-DB CONTEXT SCENARIO
+/// 
+
+//using (var scope = app.Services.CreateScope())
+//{
+//  using var context = scope.ServiceProvider.GetRequiredService<OtherDomainDbContext>();
+//  context.Database.AutoTransactionBehavior = AutoTransactionBehavior.Never;
+//  await OtherDomainDbContextExtensions.SeedDataAsync(context);
+//}
+
+///
 
 app.UseHttpsRedirection();
 

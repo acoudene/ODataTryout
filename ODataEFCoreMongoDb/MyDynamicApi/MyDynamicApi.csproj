@@ -17,6 +17,7 @@
     <ProjectReference Include="..\Domain.EFCore\Domain.EFCore.csproj" />
     <ProjectReference Include="..\OData.Api\OData.Api.csproj" />
     <ProjectReference Include="..\ODataEFCoreMongoDb.ServiceDefaults\ODataEFCoreMongoDb.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\OtherDomain.EFCore\OtherDomain.EFCore.csproj" />
   </ItemGroup>
 
 </Project>
