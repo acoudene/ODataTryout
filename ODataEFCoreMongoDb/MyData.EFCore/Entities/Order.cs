@@ -1,4 +1,4 @@
-﻿namespace MyApi.Entities;
+﻿namespace MyData.EFCore.Entities;
 
 public class Order
 {

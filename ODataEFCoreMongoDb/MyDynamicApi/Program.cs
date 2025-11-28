@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OData.ModelBuilder;
 using MyData.EFCore.DbContexts;
-using MyData.EFCore.Entities;
 using MyData.EFCore.Seeding;
+using MyDynamicApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,18 +27,24 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Configuration du modèle OData
 var modelBuilder = new ODataConventionModelBuilder();
-modelBuilder.EntitySet<Product>("Products");
-modelBuilder.EntitySet<Category>("Categories");
-modelBuilder.EntitySet<Order>("Orders");
+var entityTypes = ODataHelper.AutoRegisterEntities(modelBuilder, typeof(AppDbContext));
 
+builder.Services.AddScoped<IDataService, DataService>();
+
+// Génération dynamique des contrôleurs à la volée
+var controllerFactory = new DynamicODataControllerFactory(entityTypes);
 builder.Services.AddControllers()
+    .ConfigureApplicationPartManager(apm =>
+    {
+        apm.FeatureProviders.Add(controllerFactory);
+    })
     .AddOData(options => options
         .Select()
         .Filter()
         .OrderBy()
         .Expand()
         .Count()
-        .SetMaxTop(100)
+        .SetMaxTop(1000)
         .AddRouteComponents("odata", modelBuilder.GetEdmModel()));
 
 builder.Services.AddEndpointsApiExplorer();
@@ -69,6 +75,17 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+Console.WriteLine("\n🚀 OData API Started - Available endpoints:");
+Console.WriteLine("   GET /odata/$metadata");
+foreach (var entityType in entityTypes)
+{
+    var entitySetName = entityType.Name + "s";
+    if (entityType.Name.EndsWith("y"))
+        entitySetName = entityType.Name.Substring(0, entityType.Name.Length - 1) + "ies";
+    Console.WriteLine($"   GET /odata/{entitySetName}");
+}
+Console.WriteLine();
 
 app.Run();
 
