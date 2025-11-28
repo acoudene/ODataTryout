@@ -29,6 +29,6 @@ public static class MvcBuilderExtensions
         .Expand()
         .Count()
         .SetMaxTop(1000)
-        .AddRouteComponents("odata", edmModel));
+        .AddRouteComponents(routePrefix, edmModel));
   }
 }
