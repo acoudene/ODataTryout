@@ -1,12 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// Changelogs Date  | Author                | Description
+// 2023-12-23       | Anthony Coudène       | Creation
+
+using Microsoft.EntityFrameworkCore;
 using MongoDB.EntityFrameworkCore.Extensions;
-using MyData.EFCore.Entities;
+using Domain.EFCore.Entities;
 
-namespace MyData.EFCore.DbContexts;
+namespace Domain.EFCore.DbContexts;
 
-public class AppDbContext : DbContext
+public class DomainDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    public DomainDbContext(DbContextOptions<DomainDbContext> options) : base(options) { }
 
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Category> Categories => Set<Category>();

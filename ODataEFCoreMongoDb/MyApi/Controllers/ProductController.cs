@@ -1,17 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿// Changelogs Date  | Author                | Description
+// 2023-12-23       | Anthony Coudène       | Creation
+
+using Domain.EFCore.DbContexts;
+using Domain.EFCore.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
-using MyApi.DbContexts;
-using MyApi.Entities;
 
 namespace MyApi.Controllers;
 
 public class ProductsController : ODataController
 {
-  private readonly AppDbContext _context;
+  private readonly DomainDbContext _context;
 
-  public ProductsController(AppDbContext context)
+  public ProductsController(DomainDbContext context)
   {
     _context = context;
   }
@@ -29,7 +32,7 @@ public class ProductsController : ODataController
     //var product = await _context.Products
     //    .Include(p => p.Category)
     //    .FirstOrDefaultAsync(p => p.Id == key);
-    var product = await _context.Products        
+    var product = await _context.Products
         .FirstOrDefaultAsync(p => p.Id == key);
     if (product == null)
       return NotFound();

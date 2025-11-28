@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.OData;
+﻿// Changelogs Date  | Author                | Description
+// 2023-12-23       | Anthony Coudène       | Creation
+
+using Domain.EFCore.DbContexts;
+using Domain.EFCore.Entities;
+using Domain.EFCore.Seeding;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OData.ModelBuilder;
-using MyData.EFCore.DbContexts;
-using MyData.EFCore.Entities;
-using MyData.EFCore.Seeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +25,7 @@ var mongoDatabaseName = "ODataDemo";
 
 // docker run -d -p 27017:27017 --name mongodb mongo:latest
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<DomainDbContext>(options =>
     options.UseMongoDB(mongoConnectionString, mongoDatabaseName));
 
 // Configuration du modèle OData
@@ -59,9 +62,9 @@ if (app.Environment.IsDevelopment())
 
 using (var scope = app.Services.CreateScope())
 {
-    using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    using var context = scope.ServiceProvider.GetRequiredService<DomainDbContext>();
     context.Database.AutoTransactionBehavior = AutoTransactionBehavior.Never;
-    await SeedDataHelper.SeedDataAsync(context);
+    await DomainDbContextExtensions.SeedDataAsync(context);
 }
 
 app.UseHttpsRedirection();

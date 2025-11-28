@@ -1,17 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿// Changelogs Date  | Author                | Description
+// 2023-12-23       | Anthony Coudène       | Creation
+
+using Domain.EFCore.DbContexts;
+using Domain.EFCore.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
-using MyApi.DbContexts;
-using MyApi.Entities;
 
 namespace MyApi.Controllers;
 
 public class CategoriesController : ODataController
 {
-  private readonly AppDbContext _context;
+  private readonly DomainDbContext _context;
 
-  public CategoriesController(AppDbContext context)
+  public CategoriesController(DomainDbContext context)
   {
     _context = context;
   }

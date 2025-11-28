@@ -1,4 +1,7 @@
-﻿namespace MyData.EFCore.Entities;
+﻿// Changelogs Date  | Author                | Description
+// 2023-12-23       | Anthony Coudène       | Creation
+
+namespace Domain.EFCore.Entities;
 
 public class Order
 {

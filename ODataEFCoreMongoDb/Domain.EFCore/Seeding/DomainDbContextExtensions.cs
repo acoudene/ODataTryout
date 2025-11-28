@@ -1,12 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyData.EFCore.DbContexts;
-using MyData.EFCore.Entities;
+﻿// Changelogs Date  | Author                | Description
+// 2023-12-23       | Anthony Coudène       | Creation
 
-namespace MyData.EFCore.Seeding;
+using Microsoft.EntityFrameworkCore;
+using Domain.EFCore.DbContexts;
+using Domain.EFCore.Entities;
 
-public static class SeedDataHelper
+namespace Domain.EFCore.Seeding;
+
+public static class DomainDbContextExtensions
 {
-    public static async Task SeedDataAsync(AppDbContext context)
+    public static async Task SeedDataAsync(this DomainDbContext context)
     {
         if (!await context.Products.AnyAsync())
         {

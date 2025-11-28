@@ -1,3 +1,6 @@
+# // Changelogs Date  | Author                | Description
+# // 2023-12-23       | Anthony Coudène       | Creation
+
 @baseUrl = https://localhost:7138/odata
 
 ### Get all products
