@@ -12,6 +12,7 @@ namespace OData.Api.Controllers;
 public class DynamicODataControllerFactory : IApplicationFeatureProvider<ControllerFeature>
 {
   private readonly List<Type> _entityTypes;
+  private readonly string _keyedServiceName;
   private static readonly AssemblyBuilder _assemblyBuilder;
   private static readonly ModuleBuilder _moduleBuilder;
 
@@ -22,8 +23,11 @@ public class DynamicODataControllerFactory : IApplicationFeatureProvider<Control
     _moduleBuilder = _assemblyBuilder.DefineDynamicModule("MainModule");
   }
 
-  public DynamicODataControllerFactory(List<Type> entityTypes)
+  public DynamicODataControllerFactory(string keyedServiceName, List<Type> entityTypes)
   {
+    ArgumentException.ThrowIfNullOrWhiteSpace(keyedServiceName);
+
+    _keyedServiceName = keyedServiceName;
     _entityTypes = entityTypes;
   }
 
@@ -53,6 +57,22 @@ public class DynamicODataControllerFactory : IApplicationFeatureProvider<Control
         CallingConventions.Standard,
         new[] { typeof(IDataService) }
     );
+
+    // Définir le paramètre du constructeur
+    var parameterBuilder = constructorBuilder.DefineParameter(
+        1,  // Position du paramètre (1-based)
+        ParameterAttributes.None,
+        "dataService"
+    );
+
+    // Ajouter l'attribut [FromKeyedServices("<name>")] au paramètre
+    var fromKeyedServicesAttribute = typeof(Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute);
+    var attributeConstructor = fromKeyedServicesAttribute.GetConstructor(new[] { typeof(object) })!;
+    var attributeBuilder = new CustomAttributeBuilder(
+        attributeConstructor,
+        new object[] { _keyedServiceName }
+    );
+    parameterBuilder.SetCustomAttribute(attributeBuilder);
 
     // Obtenir le constructeur de la classe de base
     var baseConstructor = baseType.GetConstructor(new[] { typeof(IDataService) })!;

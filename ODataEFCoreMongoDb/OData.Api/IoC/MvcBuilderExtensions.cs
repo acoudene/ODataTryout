@@ -11,11 +11,12 @@ namespace OData.Api.IoC;
 public static class MvcBuilderExtensions
 {
   public static IMvcBuilder AddDefaultODataDynamicControllerFeature(this IMvcBuilder builder,
+    string keyedServiceName,
     List<Type> entityTypes,
     IEdmModel edmModel,
     string routePrefix)
   {
-    var controllerFactory = new DynamicODataControllerFactory(entityTypes);
+    var controllerFactory = new DynamicODataControllerFactory(keyedServiceName, entityTypes);
 
     return builder
     .ConfigureApplicationPartManager(apm =>
