@@ -1,0 +1,88 @@
+[{
+  "_id": {
+    "$binary": {
+      "base64": "0Vu99QhLRcOkFaL61BBxjw==",
+      "subType": "04"
+    }
+  },
+  "CategoryId": {
+    "$binary": {
+      "base64": "ztQEPBBPRP2P+xj+7oau9Q==",
+      "subType": "04"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2025-11-28T14:52:20.491Z"
+  },
+  "Name": "Laptop",
+  "Price": {
+    "$numberDecimal": "1200.00"
+  },
+  "Stock": 15
+},
+{
+  "_id": {
+    "$binary": {
+      "base64": "mt0+0shxQuqj2zR/t3/0xA==",
+      "subType": "04"
+    }
+  },
+  "CategoryId": {
+    "$binary": {
+      "base64": "ztQEPBBPRP2P+xj+7oau9Q==",
+      "subType": "04"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2025-11-28T14:52:20.492Z"
+  },
+  "Name": "Smartphone",
+  "Price": {
+    "$numberDecimal": "800.00"
+  },
+  "Stock": 25
+},
+{
+  "_id": {
+    "$binary": {
+      "base64": "6Z42/kkNQiinRXVnnLmT2w==",
+      "subType": "04"
+    }
+  },
+  "CategoryId": {
+    "$binary": {
+      "base64": "P4sDR6yJRwyiS5PPWKU46w==",
+      "subType": "04"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2025-11-28T14:52:20.492Z"
+  },
+  "Name": "Design Patterns",
+  "Price": {
+    "$numberDecimal": "55.00"
+  },
+  "Stock": 30
+},
+{
+  "_id": {
+    "$binary": {
+      "base64": "WuhwJj0BQhyJ2VouIr4IFw==",
+      "subType": "04"
+    }
+  },
+  "CategoryId": {
+    "$binary": {
+      "base64": "P4sDR6yJRwyiS5PPWKU46w==",
+      "subType": "04"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2025-11-28T23:11:43.749Z"
+  },
+  "Name": "Design Patterns",
+  "Price": {
+    "$numberDecimal": "55.00"
+  },
+  "Stock": 30
+}]

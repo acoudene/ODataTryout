@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$binary": {
+      "base64": "0Vu99QhLRcOkFaL61BBxjw==",
+      "subType": "04"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2025-11-28T19:50:51.618Z"
+  },
+  "Name": "Superman"
+},
+{
+  "_id": {
+    "$binary": {
+      "base64": "mt0+0shxQuqj2zR/t3/0xA==",
+      "subType": "04"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2025-11-28T19:50:51.619Z"
+  },
+  "Name": "Batman"
+},
+{
+  "_id": {
+    "$binary": {
+      "base64": "CFXWiGUpTIy1XZ9R+y6fuQ==",
+      "subType": "04"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2025-11-28T19:50:51.619Z"
+  },
+  "Name": "Wonder Woman"
+},
+{
+  "_id": {
+    "$binary": {
+      "base64": "6Z42/kkNQiinRXVnnLmT2w==",
+      "subType": "04"
+    }
+  },
+  "CreatedAt": {
+    "$date": "2025-11-28T19:50:51.619Z"
+  },
+  "Name": "Flash"
+}]

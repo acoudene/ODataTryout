@@ -19,7 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 // Configuration de la connexion MongoDB
-var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDB")
+var mongoConnectionString = builder.Configuration.GetConnectionString("mongo")
     ?? "mongodb://localhost:27017";
 var mongoDatabaseName = "ODataDemo";
 

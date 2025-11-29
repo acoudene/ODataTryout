@@ -1,0 +1,20 @@
+[{
+  "_id": {
+    "$binary": {
+      "base64": "ztQEPBBPRP2P+xj+7oau9Q==",
+      "subType": "04"
+    }
+  },
+  "Description": "Electronic devices",
+  "Name": "Electronics"
+},
+{
+  "_id": {
+    "$binary": {
+      "base64": "P4sDR6yJRwyiS5PPWKU46w==",
+      "subType": "04"
+    }
+  },
+  "Description": "Books and literature",
+  "Name": "Books"
+}]

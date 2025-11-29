@@ -21,8 +21,8 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 // Configuration de la connexion MongoDB
-// docker run -d -p 27017:27017 --name mongodb mongo:latest
-var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDB")
+// Aspire or docker run -d -p 27017:27017 --name mongodb mongo:latest
+var mongoConnectionString = builder.Configuration.GetConnectionString("mongo")
     ?? "mongodb://localhost:27017";
 var mongoDatabaseName = "ODataDemo";
 
