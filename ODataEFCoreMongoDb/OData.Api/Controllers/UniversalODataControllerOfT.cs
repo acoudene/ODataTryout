@@ -1,10 +1,11 @@
 ﻿// Changelogs Date  | Author                | Description
 // 2023-12-23       | Anthony Coudène       | Creation
 
-using OData.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
+using OData.Api.Services;
 
 namespace OData.Api.Controllers;
 
@@ -18,13 +19,13 @@ public class UniversalODataController<TEntity> : ODataController where TEntity :
   }
 
   [EnableQuery(MaxExpansionDepth = 4, MaxTop = 1000)]
-  public virtual IQueryable<TEntity> Get()
+  public virtual IQueryable<TEntity> GetAsync()
   {
     return _dataService.GetEntitySet<TEntity>();
   }
 
   [EnableQuery]
-  public virtual async Task<IActionResult> Get([FromRoute] Guid key)
+  public virtual async Task<IActionResult> GetAsync([FromRoute] Guid key)
   {
     var entity = await _dataService.GetByIdAsync<TEntity>(key);
     if (entity == null)
@@ -32,7 +33,7 @@ public class UniversalODataController<TEntity> : ODataController where TEntity :
     return Ok(entity);
   }
 
-  public virtual async Task<IActionResult> Post([FromBody] TEntity entity)
+  public virtual async Task<IActionResult> PostAsync([FromBody] TEntity entity)
   {
     if (!ModelState.IsValid)
       return BadRequest(ModelState);
@@ -41,7 +42,7 @@ public class UniversalODataController<TEntity> : ODataController where TEntity :
     return Created(created);
   }
 
-  public virtual async Task<IActionResult> Put([FromRoute] Guid key, [FromBody] TEntity entity)
+  public virtual async Task<IActionResult> PutAsync([FromRoute] Guid key, [FromBody] TEntity entity)
   {
     try
     {
@@ -54,7 +55,30 @@ public class UniversalODataController<TEntity> : ODataController where TEntity :
     }
   }
 
-  public virtual async Task<IActionResult> Delete([FromRoute] Guid key)
+  public virtual async Task<IActionResult> PatchAsync([FromRoute] Guid key, [FromBody] Delta<TEntity> delta)
+  {
+    if (!ModelState.IsValid)
+      return BadRequest(ModelState);
+
+    try
+    {
+      var entity = await _dataService.GetByIdAsync<TEntity>(key);
+      if (entity == null)
+        return NotFound();
+
+      // Appliquer le delta à l'entité existante
+      delta.Patch(entity);
+
+      var updated = await _dataService.UpdateAsync(key, entity);
+      return Updated(updated);
+    }
+    catch (KeyNotFoundException)
+    {
+      return NotFound();
+    }
+  }
+
+  public virtual async Task<IActionResult> DeleteAsync([FromRoute] Guid key)
   {
     try
     {
