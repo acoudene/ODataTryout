@@ -19,7 +19,7 @@ public class OtherDomainDbContext : DbContext
 
     // Configuration pour MongoDB
     modelBuilder.Entity<SuperHero>()
-        .ToCollection("superHeros")
+        .ToCollection("superHeroes")
         .HasKey(p => p.Id);
 
     // Relations

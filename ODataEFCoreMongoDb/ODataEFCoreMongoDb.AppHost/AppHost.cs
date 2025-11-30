@@ -11,7 +11,7 @@ var mongoContainer = builder.AddMongoDB("mongo");
 
 var mongoDatabase = mongoContainer
   .AddDatabase(databaseName)
-  .SeedOnResourceReady(["categories", "products", "orders", "superHeros"]);
+  .SeedOnResourceReady(["categories", "products", "orders", "superHeroes"]);
 
 builder.AddProject<Projects.MyApi>("myapi")
   .WithReference(mongoContainer)
