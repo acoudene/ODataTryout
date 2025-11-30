@@ -50,9 +50,9 @@ POST {{baseUrl}}/Products
 Content-Type: application/json
 
 {
-  "name": "Design Patterns",
-  "price": 55.00,
-  "stock": 30,
+  "name": "Hexagonal Architecture",
+  "price": 155.00,
+  "stock": 10,
   "categoryId": "3f8b0347-ac89-470c-a24b-93cf58a538eb"
 }
 
