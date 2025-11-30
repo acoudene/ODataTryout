@@ -1,9 +1,10 @@
 ﻿// Changelogs Date  | Author                | Description
 // 2023-12-23       | Anthony Coudène       | Creation
 
-using OData.Api.Services;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using OData.Api.Models;
+using OData.Api.Services;
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -11,7 +12,7 @@ namespace OData.Api.Controllers;
 
 public class DynamicODataControllerFactory : IApplicationFeatureProvider<ControllerFeature>
 {
-  private readonly List<Type> _entityTypes;
+  private readonly List<ODataEntityType> _odataEntityTypes;
   private readonly string _keyedServiceName;
   private static readonly AssemblyBuilder _assemblyBuilder;
   private static readonly ModuleBuilder _moduleBuilder;
@@ -23,27 +24,27 @@ public class DynamicODataControllerFactory : IApplicationFeatureProvider<Control
     _moduleBuilder = _assemblyBuilder.DefineDynamicModule("MainModule");
   }
 
-  public DynamicODataControllerFactory(string keyedServiceName, List<Type> entityTypes)
+  public DynamicODataControllerFactory(string keyedServiceName, List<ODataEntityType> odataEntityTypes)
   {
     ArgumentException.ThrowIfNullOrWhiteSpace(keyedServiceName);
 
     _keyedServiceName = keyedServiceName;
-    _entityTypes = entityTypes;
+    _odataEntityTypes = odataEntityTypes;
   }
 
   public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
   {
-    foreach (var entityType in _entityTypes)
+    foreach (var entityType in _odataEntityTypes)
     {
       var controllerType = CreateControllerType(entityType);
       feature.Controllers.Add(controllerType.GetTypeInfo());
     }
   }
 
-  private Type CreateControllerType(Type entityType)
+  private Type CreateControllerType(ODataEntityType odataEntityType)
   {
-    var controllerName = $"{entityType.Name}sController";
-    var baseType = typeof(UniversalODataController<>).MakeGenericType(entityType);
+    var controllerName = $"{odataEntityType.SetName}Controller";
+    var baseType = typeof(UniversalODataController<>).MakeGenericType(odataEntityType.Type);
 
     var typeBuilder = _moduleBuilder.DefineType(
         controllerName,

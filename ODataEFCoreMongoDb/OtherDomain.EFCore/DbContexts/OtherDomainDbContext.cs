@@ -11,7 +11,7 @@ public class OtherDomainDbContext : DbContext
 {
   public OtherDomainDbContext(DbContextOptions<OtherDomainDbContext> options) : base(options) { }
 
-  public DbSet<SuperHero> SuperHeros => Set<SuperHero>();
+  public DbSet<SuperHero> SuperHeroes => Set<SuperHero>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

@@ -34,7 +34,7 @@ builder.Services.AddDbContext<DomainDbContext>(options =>
 
 // Scan the DbContext for DbSet<TEntity> properties and register OData controllers for each entity type
 var modelBuilder = new ODataConventionModelBuilder();
-var entityTypes = modelBuilder.AutoRegisterEntities<DomainDbContext>();
+var odataEntityTypes = modelBuilder.AutoRegisterEntities<DomainDbContext>();
 
 // Register the EFCoreDataService as the implementation for IDataService
 string keyedServiceName = nameof(DomainDbContext);
@@ -44,7 +44,7 @@ builder.Services.AddKeyedScoped<IDataService, EFCoreDataService<DomainDbContext>
 string routePrefix = "odata";
 builder.Services
   .AddControllers()
-  .AddDefaultODataDynamicControllerFeature(keyedServiceName, entityTypes, modelBuilder.GetEdmModel(), routePrefix);
+  .AddDefaultODataDynamicControllerFeature(keyedServiceName, odataEntityTypes, modelBuilder.GetEdmModel(), routePrefix);
 
 ///
 
@@ -54,7 +54,7 @@ builder.Services.AddDbContext<OtherDomainDbContext>(options =>
 
 // OtherScan the DbContext for DbSet<TEntity> properties and register OData controllers for each entity type
 var otherModelBuilder = new ODataConventionModelBuilder();
-var otherEntityTypes = otherModelBuilder.AutoRegisterEntities<OtherDomainDbContext>();
+var otherODataEntityTypes = otherModelBuilder.AutoRegisterEntities<OtherDomainDbContext>();
 
 // Register the EFCoreDataService as the implementation for IDataService
 string otherKeyedServiceName = nameof(OtherDomainDbContext);
@@ -64,7 +64,7 @@ builder.Services.AddKeyedScoped<IDataService, EFCoreDataService<OtherDomainDbCon
 string otherRoutePrefix = "otherOdata";
 builder.Services
   .AddControllers()
-  .AddDefaultODataDynamicControllerFeature(otherKeyedServiceName, otherEntityTypes, otherModelBuilder.GetEdmModel(), otherRoutePrefix);
+  .AddDefaultODataDynamicControllerFeature(otherKeyedServiceName, otherODataEntityTypes, otherModelBuilder.GetEdmModel(), otherRoutePrefix);
 
 ///
 
@@ -113,19 +113,15 @@ app.MapControllers();
 
 Console.WriteLine("\n🚀 OData API Started - Available endpoints:");
 Console.WriteLine($"   GET /{routePrefix}/$metadata");
-foreach (var entityType in entityTypes)
+foreach (var entityType in odataEntityTypes)
 {
-  var entitySetName = entityType.Name + "s";
-  if (entityType.Name.EndsWith("y"))
-    entitySetName = entityType.Name.Substring(0, entityType.Name.Length - 1) + "ies";
+  var entitySetName = entityType.SetName;
   Console.WriteLine($"   GET /{routePrefix}/{entitySetName}");
 }
 Console.WriteLine($"   GET /{otherRoutePrefix}/$metadata");
-foreach (var entityType in otherEntityTypes)
+foreach (var entityType in otherODataEntityTypes)
 {
-  var entitySetName = entityType.Name + "s";
-  if (entityType.Name.EndsWith("y"))
-    entitySetName = entityType.Name.Substring(0, entityType.Name.Length - 1) + "ies";
+  var entitySetName = entityType.SetName;
   Console.WriteLine($"   GET /{otherRoutePrefix}/{entitySetName}");
 }
 Console.WriteLine();

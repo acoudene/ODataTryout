@@ -2,6 +2,7 @@
 // 2023-12-23       | Anthony Coudène       | Creation
 
 using Microsoft.EntityFrameworkCore;
+using OData.Api.Models;
 
 namespace Microsoft.OData.ModelBuilder;
 
@@ -17,9 +18,9 @@ public static class ODataConventionModelBuilderExtensions
   /// The <see cref="ODataConventionModelBuilder"/> instance used to configure the OData entity sets.
   /// </param>
   /// <returns>
-  /// A list of <see cref="Type"/> objects representing the entity types that were registered as entity sets.
+  /// A list of <see cref="ODataEntityType"/> objects representing the entity types that were registered as entity sets.
   /// </returns>
-  public static List<Type> AutoRegisterEntities<T>(this ODataConventionModelBuilder modelBuilder)
+  public static List<ODataEntityType> AutoRegisterEntities<T>(this ODataConventionModelBuilder modelBuilder)
     where T : DbContext
   {
     return modelBuilder.AutoRegisterEntities(typeof(T));
@@ -39,11 +40,11 @@ public static class ODataConventionModelBuilderExtensions
   /// The <see cref="Type"/> of the <see cref="DbContext"/> containing <see cref="DbSet{TEntity}"/> properties to be registered as entity sets. Must not be null.
   /// </param>
   /// <returns>
-  /// A list of <see cref="Type"/> objects representing the entity types that were registered as entity sets.
+  /// A list of <see cref="ODataEntityType"/> objects representing the entity types that were registered as entity sets.
   /// </returns>
-  public static List<Type> AutoRegisterEntities(this ODataConventionModelBuilder modelBuilder, Type dbContextType)
+  public static List<ODataEntityType> AutoRegisterEntities(this ODataConventionModelBuilder modelBuilder, Type dbContextType)
   {
-    var entityTypes = new List<Type>();
+    var odataentityTypes = new List<ODataEntityType>();
     var dbSetProperties = dbContextType.GetProperties()
         .Where(p => p.PropertyType.IsGenericType
                     && p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>));
@@ -56,9 +57,9 @@ public static class ODataConventionModelBuilderExtensions
           .MakeGenericMethod(entityType);
 
       entitySetMethod.Invoke(modelBuilder, new[] { property.Name });
-      entityTypes.Add(entityType);
+      odataentityTypes.Add(new ODataEntityType { Type = entityType, SetName = property.Name });
     }
 
-    return entityTypes;
+    return odataentityTypes;
   }
 }

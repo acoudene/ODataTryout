@@ -7,5 +7,5 @@
 GET {{baseUrl}}/$metadata
 
 ### Get all super heroes
-GET {{baseUrl}}/SuperHeros
+GET {{baseUrl}}/SuperHeroes
 
