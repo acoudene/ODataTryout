@@ -1,5 +1,5 @@
 // Changelogs Date  | Author                | Description
-// 2023-12-23       | Anthony Coudène       | Creation
+// 2023-12-23       | Anthony CoudÃ¨ne       | Creation
 
 using ODataEFCoreMongoDb.AppHost.Seeding;
 
@@ -20,6 +20,11 @@ builder.AddProject<Projects.MyApi>("myapi")
 
 
 builder.AddProject<Projects.MyDynamicApi>("mydynamicapi")
+  .WithReference(mongoContainer)
+  .WithReference(mongoDatabase)
+  .WaitFor(mongoDatabase);
+
+builder.AddProject<Projects.MonolithBlazorApp>("monolithblazorapp")
   .WithReference(mongoContainer)
   .WithReference(mongoDatabase)
   .WaitFor(mongoDatabase);

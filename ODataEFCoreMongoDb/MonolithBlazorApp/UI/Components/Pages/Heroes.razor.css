@@ -1,0 +1,80 @@
+﻿/* ==============================
+   Hero Modal (Bootstrap override)
+   ============================== */
+
+/* Fond semi-transparent derrière la modale */
+.hero-modal-backdrop {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 simplifié */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1050; /* au-dessus du contenu normal */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Conteneur principal de la modale */
+.hero-modal-dialog {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  max-width: 500px;
+  animation: heroModalFadeIn 0.25s ease-in-out;
+}
+
+/* Animation d’apparition */
+@keyframes heroModalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* En-tête de la modale */
+.hero-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dee2e6;
+  padding: 1rem 1.25rem;
+  background-color: #f8f9fa;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+
+/* Corps de la modale */
+.hero-modal-body {
+  padding: 1.25rem;
+}
+
+/* Pied de la modale */
+.hero-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+}
+
+/* Animation du fond au chargement */
+.hero-modal-fade-in {
+  animation: heroBackdropFade 0.2s ease-in-out;
+}
+
+@keyframes heroBackdropFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

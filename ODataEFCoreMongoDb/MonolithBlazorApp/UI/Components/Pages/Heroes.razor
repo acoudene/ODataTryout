@@ -1,0 +1,104 @@
+﻿@page "/"
+@page "/heroes"
+
+<h1>Heroes</h1>
+
+@if (_heroes is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="mb-3 d-flex">
+        @* TODO: Set Search zone *@
+        <InputText placeholder="Search by pattern..." @bind-value="SearchPattern" />
+        <button type="button" class="btn btn-primary" onclick="@SearchHeroesAsync(SearchPattern)">Search</button>
+    </div>
+
+    @* TODO: Add table *@
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Hero name</th>
+                <th>Power</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hero in _heroes)
+            {
+                <tr>
+                    <td>@hero.HeroName</td>
+                    <td>@hero.Power</td>
+                    <td>@hero.Email</td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm" @onclick="async () => await OpenHeroDialogAsync(hero)">
+                            View
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>Add</h2>
+
+    <div>
+        @* TODO: Add form *@
+        <EditForm OnValidSubmit="CreateAsync" Model="HeroFormViewModel" FormName="HeroCreation">
+
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="mb-3">
+                <label>Hero name:</label>
+                <InputText @bind-Value="HeroFormViewModel.HeroName" class="form-control" />
+                <ValidationMessage For="@(() => HeroFormViewModel.HeroName)" />
+            </div>
+            <div class="mb-3">
+                <label>Power:</label>
+                <InputText @bind-Value="HeroFormViewModel.Power" class="form-control" />
+                <ValidationMessage For="@(() => HeroFormViewModel.Power)" />
+            </div>
+            <div class="mb-3">
+                <label>Email:</label>
+                <InputText @bind-Value="HeroFormViewModel.Email" class="form-control" />
+                <ValidationMessage For="@(() => HeroFormViewModel.Email)" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create a new hero</button>
+        </EditForm>
+    </div>
+}
+
+@* TODO: Set Modal dialog to display details *@
+@if (_isHeroDialogOpen)
+{
+    <div class="hero-modal-backdrop hero-modal-fade-in" @onclick="CloseHeroDialog">
+        <div class="hero-modal-dialog" @onclick:stopPropagation>
+            <div class="hero-modal-header">
+                <h5 class="modal-title">Details</h5>
+                <button type="button" class="btn-close" @onclick="CloseHeroDialog"></button>
+            </div>
+
+            <div class="hero-modal-body">            
+                @* // TODO *@
+            </div>
+
+            <div class="hero-modal-footer">
+                <button class="btn btn-secondary" @onclick="CloseHeroDialog">Close</button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (!string.IsNullOrWhiteSpace(_errorMessage))
+{
+    <div class="alert alert-danger d-flex justify-content-between align-items-center mt-3">
+        <span>@_errorMessage</span>
+        <button class="btn btn-light btn-sm ms-3" @onclick="ReloadPage">
+            Reload
+        </button>
+    </div>
+}

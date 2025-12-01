@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MonolithBlazorApp\MonolithBlazorApp.csproj" />
     <ProjectReference Include="..\MyApi\MyApi.csproj" />
     <ProjectReference Include="..\MyDynamicApi\MyDynamicApi.csproj" />
   </ItemGroup>
