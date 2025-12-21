@@ -20,12 +20,7 @@ public partial class Heroes
 
   // TODO: Set entity linked to the create form
   [SupplyParameterFromForm]
-  private HeroFormViewModel HeroFormViewModel { get; set; } = new HeroFormViewModel()
-  {
-    Power = string.Empty,
-    HeroName = string.Empty,
-    Email = string.Empty
-  };
+  public required HeroFormViewModel HeroFormViewModel { get; set; }
 
   protected override async Task OnInitializedAsync()
   {

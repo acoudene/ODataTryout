@@ -3,6 +3,7 @@
 
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.DependencyInjection;
 using OData.Api.Models;
 using OData.Api.Services;
 using System.Reflection;
@@ -67,7 +68,7 @@ public class DynamicODataControllerFactory : IApplicationFeatureProvider<Control
     );
 
     // Ajouter l'attribut [FromKeyedServices("<name>")] au paramètre
-    var fromKeyedServicesAttribute = typeof(Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute);
+    var fromKeyedServicesAttribute = typeof(FromKeyedServicesAttribute);
     var attributeConstructor = fromKeyedServicesAttribute.GetConstructor(new[] { typeof(object) })!;
     var attributeBuilder = new CustomAttributeBuilder(
         attributeConstructor,
@@ -87,6 +88,6 @@ public class DynamicODataControllerFactory : IApplicationFeatureProvider<Control
     ilGenerator.Emit(OpCodes.Call, baseConstructor); // Appeler base(dataService)
     ilGenerator.Emit(OpCodes.Ret);            // Return
 
-    return typeBuilder.CreateType()!;
+    return typeBuilder.CreateType();
   }
 }
